@@ -9,9 +9,103 @@
 <body>
     <h1>Hey. pdf417 barcode</h1>
 
-    <input type="file" name="file" id="file" accept="image/*" max="1" >
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" id="image" accept="image/*" max="1" >
+        <button type="submit">Ok</button>
+    </form>
 
-    <script src="//unpkg.com/javascript-barcode-reader"></script>
+    <canvas></canvas>
+
+    <p style="color:blue">test text</p>
+
+    <script defer>
+
+        const canvas = document.querySelector("canvas")
+        const ctx = canvas.getContext("2d")
+
+        //  Reading canvas
+        let imageData
+        const lim = 50
+
+        function getPixel(x, y) {
+            // Now you can access pixel data from imageData.data.
+            // It's a one-dimensional array of RGBA values.
+            // Here's an example of how to get a pixel's color at (x,y)
+            var index = (y*imageData.width + x) * 4;
+            var R = imageData.data[index];
+            var G = imageData.data[index + 1];
+            var B = imageData.data[index + 2];
+            var alpha = imageData.data[index + 3];
+
+            console.log("R: ", R)
+            console.log("G: ", G)
+            console.log("B: ", B)
+            console.log("Alpha: ", alpha)
+        }
+
+
+        function blackOrWhite(x, y) {
+            
+        }
+
+
+        document.querySelector("#image").addEventListener("input", (e) => {
+            const reader = new FileReader()
+
+            reader.addEventListener('load', (event) => {
+
+                const image = new Image();
+                image.onload = function() {
+                    
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+
+                    ctx.drawImage(image, 0, 0);
+
+                    imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    for(let y=0; y < canvas.height; y++) {
+                        for(let x=0; x < canvas.width; x++) {
+                            
+                            const index = (y*imageData.width + x) * 4
+
+                            //const average = (imageData.data[index] + imageData.data[index+1] + imageData.data[index+2]) /3
+                            const average = imageData.data[index]
+
+
+                            const BOW = average > lim ? 255 : 0
+
+                            imageData.data[index] = BOW
+                            imageData.data[index + 1] = BOW
+                            imageData.data[index + 2] = BOW
+
+                            imageData.data[index + 3] = average < lim ? 255 : 0
+
+
+                            /* var G = imageData.data[index + 1];
+                            var B = imageData.data[index + 2];
+                            var alpha = imageData.data[index + 3]; */
+                        }
+                    }
+
+
+                    ctx.putImageData(imageData,0,0,0,0, imageData.width,   imageData.height);
+                    
+                };
+
+                image.src = event.target.result;
+            });
+
+            reader.readAsDataURL(e.target.files[0]);
+        })
+
+
+        canvas.addEventListener("click", (e) => {
+            getPixel(e.offsetX, e.offsetY)
+        })
+
+    </script>
+
 
 </body>
 </html>
