@@ -39,7 +39,9 @@
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
 
-        const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+        // const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+        const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 500, qrbox : { width: 350, height: 100 } });
+
         html5QrcodeScanner.render(onScanSuccess);
 
     </script>
