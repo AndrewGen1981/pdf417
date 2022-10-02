@@ -72,7 +72,6 @@
                             //const average = (imageData.data[index] + imageData.data[index+1] + imageData.data[index+2]) /3
                             const average = imageData.data[index]
 
-
                             const BOW = average > lim ? 255 : 0
 
                             imageData.data[index] = BOW
@@ -80,11 +79,6 @@
                             imageData.data[index + 2] = BOW
 
                             imageData.data[index + 3] = average < lim ? 255 : 0
-
-
-                            /* var G = imageData.data[index + 1];
-                            var B = imageData.data[index + 2];
-                            var alpha = imageData.data[index + 3]; */
                         }
                     }
 

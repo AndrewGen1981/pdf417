@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- https://blog.minhazav.dev/QR-and-barcode-scanner-using-html-and-javascript/#scan-using-file -->
+
+    <!-- include the library -->
+    <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+
+    <div id="qr-reader" style="width: 600px"></div>
+
+    <p id="result"></p>
+
+    <script defer>
+        
+        function onScanSuccess(decodedText, decodedResult) {
+            const result = document.querySelector("#result")
+            result.textContent = `Code scanned = ${ decodedText } \n ${ JSON.stringify(decodedResult) }`, 
+
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
+        }
+
+        const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+
+    </script>
+
+</body>
+</html>

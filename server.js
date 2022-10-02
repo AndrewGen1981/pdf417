@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 5000
 app.use(express.static(__dirname + '/'))
 
 
-app.get("/", (req, res) => {
+// *************** MY READER
+
+app.get("/my", (req, res) => {
     res.sendFile(path.join(__dirname + "/views/main.html"))
 })
 
@@ -33,6 +35,15 @@ app.post("/", upload.single("image"), (req, res) => {
     res.send("ok")
 
 })
+
+
+
+// *************** Minhaz READER
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname + "/views/minhaz.html"))
+})
+
 
 
 app.listen(PORT, console.log(`http://localhost:${ PORT }`))
